@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use Cake\ORM\Query;
 /**
  * Clientes Controller
  *
@@ -57,8 +57,12 @@ class ClientesController extends AppController
             'contain' => [
                 'Users', 
                 'Contatos', 
-                'Pagamentos' => ['sort' => ['Pagamentos.created' => 'DESC']], 
-                'Vendas' => ['sort' => ['Vendas.created' => 'DESC']]
+                'Pagamentos' => function (Query $query) {
+                    return $query->order(['Pagamentos.created' => 'DESC'])->limit(10);
+                },
+                'Vendas' => function (Query $query) {
+                    return $query->order(['Vendas.created' => 'DESC'])->limit(10);
+                }
             ]
         ]);
         $this->set('cliente', $cliente);

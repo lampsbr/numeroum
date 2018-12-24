@@ -58,7 +58,7 @@ $this->end();
     <!-- Panel header -->
     <div class="panel-heading">
         <p>
-            <b>Pagamentos</b>
+            <b>Pagamentos (10 mais recentes)</b>
             <?php echo $this->Html->link(' Adicionar', ['controller' => 'pagamentos', 'action' => 'add', $cliente->id], ['title' => 'Adicionar contato', 'class' => 'btn btn-default btn-sm glyphicon glyphicon-plus pull-right']); ?>
         </p>
     </div>
@@ -91,7 +91,7 @@ $this->end();
     <!-- Panel header -->
     <div class="panel-heading">
         <p>
-            <b>Vendas</b>
+            <b>Vendas (10 mais recentes)</b>
             <?php echo $this->Html->link(' Adicionar', ['controller' => 'vendas', 'action' => 'add', $cliente->id], ['title' => 'Adicionar venda', 'class' => 'btn btn-default btn-sm glyphicon glyphicon-plus pull-right']); ?>
         </p>
     </div>
