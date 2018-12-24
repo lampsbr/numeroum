@@ -10,7 +10,7 @@ $this->end();
     <table class="table table-striped" cellpadding="0" cellspacing="0">
         <tr>
             <td><?= __('Saldo Devedor') ?></td>
-            <td><?= $this->Number->format($cliente->saldo_devedor) ?></td>
+            <td><?= $this->Number->currency($cliente->saldo_devedor) ?></td>
         </tr>
         <tr>
             <td><?= __('Cadastrada em') ?></td>
@@ -75,8 +75,8 @@ $this->end();
             <tbody>
             <?php foreach ($cliente->pagamentos as $pagamentos): ?>
                 <tr>
-                    <td><?= h($pagamentos->created) ?></td>
-                    <td><?= h($pagamentos->valor) ?></td>
+                    <td><?= $pagamentos->created->i18nFormat('dd-MM-yyyy HH:mm:ss') ?></td>
+                    <td><?= $this->Number->currency($pagamentos->valor) ?></td>
                     <td><?= h($pagamentos->meio_pagamento) ?></td>
                     <td><?= h($pagamentos->observacao) ?></td>
                 </tr>

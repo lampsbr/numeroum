@@ -14,7 +14,8 @@ $this->end();
 <fieldset>
     <?php
     echo $this->Form->control('valor');
-    echo $this->Form->control('meio_pagamento');
+    echo $this->Form->label('meio_pagamento', 'Meio de pagamento');
+    echo $this->Form->select('meio_pagamento',['dinheiro' => 'dinheiro', 'débito' => 'débito', 'crédito' => 'crédito'],['value' => 'dinheiro']);
     echo $this->Form->control('observacao');
     echo $this->Form->hidden('cliente_id');
     ?>

@@ -57,18 +57,17 @@ class PagamentosController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add($idCliente)
-    {
+    public function add($idCliente){
         $pagamento = $this->Pagamentos->newEntity();
+        if($idCliente){
+            $cliente = $this->Pagamentos->Clientes->get($idCliente);
+            $pagamento->cliente_id = $idCliente;
+            $pagamento->cliente = $cliente;
+        }
         if ($this->request->is('post')) {
-            $cli = $this->Pagamentos->Clientes->get($this->request->getData()['cliente_id']);
-            $pagamento = $this->Pagamentos->newEntity($this->request->getData(), ['associated' => ['Clientes']]);
-            $pagamento->cliente->saldo_devedor -= $pagamento->valor;
-            $dados['cliente'] = ['id' =>$dados['cliente_id'], 'saldo_devedor' => ($cli->saldo_devedor - $dados['valor'])];
-            Log::write('error', $dados);
+            $dados = $this->request->getData();
             $pagamento = $this->Pagamentos->patchEntity($pagamento, $dados);
-            $pagamento->cliente
-            Log::write('error', $pagamento);
+            $pagamento->cliente->saldo_devedor -= $pagamento->valor;
             if ($this->Pagamentos->save($pagamento)) {
                 $this->Flash->success('Pagamento cadastrado!');
             } else{
