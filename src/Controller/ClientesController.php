@@ -12,6 +12,14 @@ use App\Controller\AppController;
  */
 class ClientesController extends AppController
 {
+    public function isAuthorized($user){
+        $action = $this->request->getParam('action');
+        // The add and tags actions are always allowed to logged in users.
+        if (in_array($action, ['add', 'view', 'index', 'edit', 'delete', 'logout'])) {
+            return true;
+        }
+        return false;
+    }
 
     /**
      * Index method
@@ -54,6 +62,7 @@ class ClientesController extends AppController
         $cliente = $this->Clientes->newEntity();
         if ($this->request->is('post')) {
             $cliente = $this->Clientes->patchEntity($cliente, $this->request->getData());
+            $cliente->user_id = $this->Auth->user('id');
             if ($this->Clientes->save($cliente)) {
                 $this->Flash->success(__('The cliente has been saved.'));
 
@@ -79,6 +88,7 @@ class ClientesController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $cliente = $this->Clientes->patchEntity($cliente, $this->request->getData());
+            $cliente->user_id = $this->Auth->user('id');
             if ($this->Clientes->save($cliente)) {
                 $this->Flash->success(__('The cliente has been saved.'));
 

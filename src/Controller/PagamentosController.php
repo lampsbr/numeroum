@@ -13,6 +13,14 @@ use App\Controller\AppController;
 class PagamentosController extends AppController
 {
 
+    public function isAuthorized($user){
+        $action = $this->request->getParam('action');
+        // The add and tags actions are always allowed to logged in users.
+        if (in_array($action, ['add', 'view', 'index', 'edit', 'delete', 'logout'])) {
+            return true;
+        }
+        return false;
+    }
     /**
      * Index method
      *

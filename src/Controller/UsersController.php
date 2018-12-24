@@ -13,6 +13,20 @@ use App\Controller\AppController;
 class UsersController extends AppController
 {
 
+    public function initialize(){
+        parent::initialize();
+        $this->Auth->allow(['logout']);
+    } 
+    
+    public function isAuthorized($user){
+        $action = $this->request->getParam('action');
+        // The add and tags actions are always allowed to logged in users.
+        if (in_array($action, ['add', 'view', 'index', 'edit', 'delete', 'logout'])) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Index method
      *
@@ -104,4 +118,20 @@ class UsersController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function login(){
+        if ($this->request->is('post')) {
+            $user = $this->Auth->identify();
+            if ($user) {
+                $this->Auth->setUser($user);
+                return $this->redirect($this->Auth->redirectUrl());
+            }
+            $this->Flash->error('Usuário ou senha estão errados.');
+        }
+    }
+
+    public function logout(){
+    $this->Flash->success('Até mais tarde!');
+    return $this->redirect($this->Auth->logout());
+}
 }
