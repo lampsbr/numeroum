@@ -16,7 +16,7 @@ $this->end();
     <?php
     echo $this->Form->control('nome');
     echo $this->Form->control('observacoes');
-    echo $this->Form->control('saldo_devedor');
+    echo $this->Form->hidden('saldo_devedor', ['default' => 0]);
     ?>
 </fieldset>
 <?= $this->Form->button(__("Cadastrar")); ?>
