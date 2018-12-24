@@ -1,79 +1,27 @@
 <?php
 $this->extend('../Layout/TwitterBootstrap/dashboard');
-
-
-$this->start('tb_actions');
-?>
-<li><?= $this->Html->link(__('Edit Cliente'), ['action' => 'edit', $cliente->id]) ?> </li>
-<li><?= $this->Form->postLink(__('Delete Cliente'), ['action' => 'delete', $cliente->id], ['confirm' => __('Are you sure you want to delete # {0}?', $cliente->id)]) ?> </li>
-<li><?= $this->Html->link(__('List Clientes'), ['action' => 'index']) ?> </li>
-<li><?= $this->Html->link(__('New Cliente'), ['action' => 'add']) ?> </li>
-<li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
-<li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
-<li><?= $this->Html->link(__('List Contatos'), ['controller' => 'Contatos', 'action' => 'index']) ?> </li>
-<li><?= $this->Html->link(__('New Contato'), ['controller' => 'Contatos', 'action' => 'add']) ?> </li>
-<li><?= $this->Html->link(__('List Pagamentos'), ['controller' => 'Pagamentos', 'action' => 'index']) ?> </li>
-<li><?= $this->Html->link(__('New Pagamento'), ['controller' => 'Pagamentos', 'action' => 'add']) ?> </li>
-<li><?= $this->Html->link(__('List Vendas'), ['controller' => 'Vendas', 'action' => 'index']) ?> </li>
-<li><?= $this->Html->link(__('New Venda'), ['controller' => 'Vendas', 'action' => 'add']) ?> </li>
-<?php
-$this->end();
-
-$this->start('tb_sidebar');
-?>
-<ul class="nav nav-sidebar">
-<li><?= $this->Html->link(__('Edit Cliente'), ['action' => 'edit', $cliente->id]) ?> </li>
-<li><?= $this->Form->postLink(__('Delete Cliente'), ['action' => 'delete', $cliente->id], ['confirm' => __('Are you sure you want to delete # {0}?', $cliente->id)]) ?> </li>
-<li><?= $this->Html->link(__('List Clientes'), ['action' => 'index']) ?> </li>
-<li><?= $this->Html->link(__('New Cliente'), ['action' => 'add']) ?> </li>
-<li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
-<li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
-<li><?= $this->Html->link(__('List Contatos'), ['controller' => 'Contatos', 'action' => 'index']) ?> </li>
-<li><?= $this->Html->link(__('New Contato'), ['controller' => 'Contatos', 'action' => 'add']) ?> </li>
-<li><?= $this->Html->link(__('List Pagamentos'), ['controller' => 'Pagamentos', 'action' => 'index']) ?> </li>
-<li><?= $this->Html->link(__('New Pagamento'), ['controller' => 'Pagamentos', 'action' => 'add']) ?> </li>
-<li><?= $this->Html->link(__('List Vendas'), ['controller' => 'Vendas', 'action' => 'index']) ?> </li>
-<li><?= $this->Html->link(__('New Venda'), ['controller' => 'Vendas', 'action' => 'add']) ?> </li>
-</ul>
-<?php
+$this->start('titulo');
+echo $cliente->nome;
+echo $this->Form->postLink('', ['action' => 'delete', $cliente->id], ['confirm' => __('Quer mesmo apagar esta cliente?'), 'title' => __('Apagar'), 'class' => 'btn btn-default btn-lg glyphicon glyphicon-trash pull-right']);
+echo $this->Html->link('', ['action' => 'edit', $cliente->id], ['title' => __('Editar'), 'class' => 'btn btn-default btn-lg glyphicon glyphicon-pencil pull-right']);
 $this->end();
 ?>
 <div class="panel panel-default">
-    <!-- Panel header -->
-    <div class="panel-heading">
-        <h3 class="panel-title"><?= h($cliente->id) ?></h3>
-    </div>
     <table class="table table-striped" cellpadding="0" cellspacing="0">
-        <tr>
-            <td><?= __('Id') ?></td>
-            <td><?= h($cliente->id) ?></td>
-        </tr>
-        <tr>
-            <td><?= __('Nome') ?></td>
-            <td><?= h($cliente->nome) ?></td>
-        </tr>
-        <tr>
-            <td><?= __('User') ?></td>
-            <td><?= $cliente->has('user') ? $this->Html->link($cliente->user->id, ['controller' => 'Users', 'action' => 'view', $cliente->user->id]) : '' ?></td>
-        </tr>
         <tr>
             <td><?= __('Saldo Devedor') ?></td>
             <td><?= $this->Number->format($cliente->saldo_devedor) ?></td>
         </tr>
         <tr>
-            <td><?= __('Created') ?></td>
-            <td><?= h($cliente->created) ?></td>
+            <td><?= __('Cadastrada em') ?></td>
+            <td><?= $cliente->created->i18nFormat('dd-MM-yyyy HH:mm:ss') ?></td>
         </tr>
         <tr>
-            <td><?= __('Modified') ?></td>
-            <td><?= h($cliente->modified) ?></td>
+            <td><?= __('Alterada pela última vez em') ?></td>
+            <td><?= $cliente->modified?$cliente->modified->i18nFormat('dd-MM-yyyy HH:mm:ss'):'' ?></td>
         </tr>
         <tr>
-            <td><?= __('Deleted') ?></td>
-            <td><?= h($cliente->deleted) ?></td>
-        </tr>
-        <tr>
-            <td><?= __('Observacoes') ?></td>
+            <td><?= __('Observações') ?></td>
             <td><?= $this->Text->autoParagraph(h($cliente->observacoes)); ?></td>
         </tr>
     </table>
@@ -82,43 +30,28 @@ $this->end();
 <div class="panel panel-default">
     <!-- Panel header -->
     <div class="panel-heading">
-        <h3 class="panel-title"><?= __('Related Contatos') ?></h3>
+        <p>
+            <b>Contatos</b>
+            <?php echo $this->Html->link(' Adicionar', ['controller' => 'contatos', 'action' => 'add', $cliente->id], ['title' => 'Adicionar contato', 'class' => 'btn btn-default btn-sm glyphicon glyphicon-plus pull-right']); ?>
+        </p>
     </div>
     <?php if (!empty($cliente->contatos)): ?>
         <table class="table table-striped">
             <thead>
             <tr>
-                <th><?= __('Id') ?></th>
-                <th><?= __('Created') ?></th>
-                <th><?= __('Modified') ?></th>
-                <th><?= __('Deleted') ?></th>
-                <th><?= __('Tipo') ?></th>
-                <th><?= __('Contato') ?></th>
-                <th><?= __('Cliente Id') ?></th>
-                <th class="actions"><?= __('Actions') ?></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             <?php foreach ($cliente->contatos as $contatos): ?>
                 <tr>
-                    <td><?= h($contatos->id) ?></td>
-                    <td><?= h($contatos->created) ?></td>
-                    <td><?= h($contatos->modified) ?></td>
-                    <td><?= h($contatos->deleted) ?></td>
-                    <td><?= h($contatos->tipo) ?></td>
                     <td><?= h($contatos->contato) ?></td>
-                    <td><?= h($contatos->cliente_id) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link('', ['controller' => 'Contatos', 'action' => 'view', $contatos->id], ['title' => __('View'), 'class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>
-                        <?= $this->Html->link('', ['controller' => 'Contatos', 'action' => 'edit', $contatos->id], ['title' => __('Edit'), 'class' => 'btn btn-default glyphicon glyphicon-pencil']) ?>
-                        <?= $this->Form->postLink('', ['controller' => 'Contatos', 'action' => 'delete', $contatos->id], ['confirm' => __('Are you sure you want to delete # {0}?', $contatos->id), 'title' => __('Delete'), 'class' => 'btn btn-default glyphicon glyphicon-trash']) ?>
-                    </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
         </table>
     <?php else: ?>
-        <p class="panel-body">no related Contatos</p>
+        <p class="panel-body">Sem contatos cadastrados até agora</p>
     <?php endif; ?>
 </div>
 <div class="panel panel-default">

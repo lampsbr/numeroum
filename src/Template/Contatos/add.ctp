@@ -6,34 +6,18 @@
 ?>
 <?php
 $this->extend('../Layout/TwitterBootstrap/dashboard');
-
-$this->start('tb_actions');
-?>
-    <li><?= $this->Html->link(__('List Contatos'), ['action' => 'index']) ?></li>
-    <li><?= $this->Html->link(__('List Clientes'), ['controller' => 'Clientes', 'action' => 'index']) ?> </li>
-    <li><?= $this->Html->link(__('New Cliente'), ['controller' => 'Clientes', 'action' => 'add']) ?> </li>
-<?php
-$this->end();
-
-$this->start('tb_sidebar');
-?>
-<ul class="nav nav-sidebar">
-    <li><?= $this->Html->link(__('List Contatos'), ['action' => 'index']) ?></li>
-    <li><?= $this->Html->link(__('List Clientes'), ['controller' => 'Clientes', 'action' => 'index']) ?> </li>
-    <li><?= $this->Html->link(__('New Cliente'), ['controller' => 'Clientes', 'action' => 'add']) ?> </li>
-</ul>
-<?php
+$this->start('titulo');
+echo 'Adicionar contato';
 $this->end();
 ?>
 <?= $this->Form->create($contato); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Contato']) ?></legend>
     <?php
-    echo $this->Form->control('deleted');
-    echo $this->Form->control('tipo');
+    echo $this->Form->label('tipo', 'Tipo de contato');
+    echo $this->Form->select('tipo',['telefone', 'email', 'pessoa'],['value' => 'telefone']);
     echo $this->Form->control('contato');
-    echo $this->Form->control('cliente_id', ['options' => $clientes]);
+    echo $this->Form->hidden('cliente_id');
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button('Cadastrar'); ?>
 <?= $this->Form->end() ?>

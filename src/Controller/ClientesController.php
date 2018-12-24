@@ -64,11 +64,11 @@ class ClientesController extends AppController
             $cliente = $this->Clientes->patchEntity($cliente, $this->request->getData());
             $cliente->user_id = $this->Auth->user('id');
             if ($this->Clientes->save($cliente)) {
-                $this->Flash->success(__('The cliente has been saved.'));
+                $this->Flash->success(__('A cliente foi cadastrada!'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The cliente could not be saved. Please, try again.'));
+            $this->Flash->error(__('Houve um erro ao cadastrar a cliente! Tente novamente, ou então anote o horário e avise a Bruno.'));
         }
         $users = $this->Clientes->Users->find('list', ['limit' => 200]);
         $this->set(compact('cliente', 'users'));
@@ -90,11 +90,11 @@ class ClientesController extends AppController
             $cliente = $this->Clientes->patchEntity($cliente, $this->request->getData());
             $cliente->user_id = $this->Auth->user('id');
             if ($this->Clientes->save($cliente)) {
-                $this->Flash->success(__('The cliente has been saved.'));
+                $this->Flash->success(__('A cliente foi salva!'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The cliente could not be saved. Please, try again.'));
+            $this->Flash->error(__('Houve um erro ao alterar a cliente! Tente novamente, ou então anote o horário e avise a Bruno.'));
         }
         $users = $this->Clientes->Users->find('list', ['limit' => 200]);
         $this->set(compact('cliente', 'users'));
@@ -112,9 +112,9 @@ class ClientesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $cliente = $this->Clientes->get($id);
         if ($this->Clientes->delete($cliente)) {
-            $this->Flash->success(__('The cliente has been deleted.'));
+            $this->Flash->success(__('A cliente foi apagada.'));
         } else {
-            $this->Flash->error(__('The cliente could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Houve um erro ao apagar a cliente! Tente novamente, ou então anote o horário e avise a Bruno.'));
         }
 
         return $this->redirect(['action' => 'index']);

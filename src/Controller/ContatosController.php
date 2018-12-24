@@ -57,20 +57,20 @@ class ContatosController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($idCliente)
     {
         $contato = $this->Contatos->newEntity();
         if ($this->request->is('post')) {
             $contato = $this->Contatos->patchEntity($contato, $this->request->getData());
             if ($this->Contatos->save($contato)) {
-                $this->Flash->success(__('The contato has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                $this->Flash->success(__('Contato adicionado!'));
+            } else{
+                $this->Flash->error('Houve um erro ao cadastrar o contato! Tente novamente, ou então anote o horário e avise a Bruno.');
             }
-            $this->Flash->error(__('The contato could not be saved. Please, try again.'));
+            return $this->redirect(['controller' => 'clientes', 'action' => 'view', $contato->cliente_id]);
         }
-        $clientes = $this->Contatos->Clientes->find('list', ['limit' => 200]);
-        $this->set(compact('contato', 'clientes'));
+        $contato->cliente_id = $idCliente;
+        $this->set(compact('contato'));
     }
 
     /**
