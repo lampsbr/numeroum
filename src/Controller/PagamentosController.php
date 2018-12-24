@@ -61,16 +61,13 @@ class PagamentosController extends AppController
     {
         $pagamento = $this->Pagamentos->newEntity();
         if ($this->request->is('post')) {
-            //buscar cliente no banco
-            $dados = $this->request->getData();
-            Log::write('error', $dados);
-            $cli = $this->Pagamentos->Clientes->get($dados['cliente_id']);
-            Log::write('error', $cli);
-            //subtrair valor pago do saldo devedor
-            //adicionar ao array que será patch
+            $cli = $this->Pagamentos->Clientes->get($this->request->getData()['cliente_id']);
+            $pagamento = $this->Pagamentos->newEntity($this->request->getData(), ['associated' => ['Clientes']]);
+            $pagamento->cliente->saldo_devedor -= $pagamento->valor;
             $dados['cliente'] = ['id' =>$dados['cliente_id'], 'saldo_devedor' => ($cli->saldo_devedor - $dados['valor'])];
             Log::write('error', $dados);
             $pagamento = $this->Pagamentos->patchEntity($pagamento, $dados);
+            $pagamento->cliente
             Log::write('error', $pagamento);
             if ($this->Pagamentos->save($pagamento)) {
                 $this->Flash->success('Pagamento cadastrado!');
