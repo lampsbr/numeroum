@@ -26,14 +26,22 @@ class ClientesController extends AppController
      *
      * @return \Cake\Http\Response|void
      */
-    public function index()
-    {
-        $this->paginate = [
-            'contain' => ['Users']
-        ];
+    public function index(){
+        $busca = '';
+        if(null !== $this->request->getData('busca')){
+            $busca = trim($this->request->getData('busca'));
+            $this->paginate = [
+                'contain' => ['Users'],
+                'conditions' => ['nome like' => '%'.$busca.'%']
+            ];
+        } else {
+            $this->paginate = [
+                'contain' => ['Users']
+            ];
+        }
         $clientes = $this->paginate($this->Clientes);
 
-        $this->set(compact('clientes'));
+        $this->set(compact('clientes', 'busca'));
     }
 
     /**
