@@ -33,16 +33,6 @@ class Cliente extends Entity
      * @var array
      */
     protected $_accessible = [
-        'created' => true,
-        'modified' => true,
-        'deleted' => true,
-        'nome' => true,
-        'observacoes' => true,
-        'saldo_devedor' => true,
-        'user_id' => true,
-        'user' => true,
-        'contatos' => true,
-        'pagamentos' => true,
-        'vendas' => true
+        '*' => true,
     ];
 }

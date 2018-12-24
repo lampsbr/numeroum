@@ -14,7 +14,7 @@ $this->end();
 <fieldset>
     <?php
     echo $this->Form->label('tipo', 'Tipo de contato');
-    echo $this->Form->select('tipo',['telefone', 'email', 'pessoa'],['value' => 'telefone']);
+    echo $this->Form->select('tipo',['telefone' => 'telefone','email' => 'email','pessoa' => 'pessoa'],['value' => 'telefone']);
     echo $this->Form->control('contato');
     echo $this->Form->hidden('cliente_id');
     ?>

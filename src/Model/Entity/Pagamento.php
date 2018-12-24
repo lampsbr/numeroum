@@ -30,13 +30,6 @@ class Pagamento extends Entity
      * @var array
      */
     protected $_accessible = [
-        'created' => true,
-        'modified' => true,
-        'deleted' => true,
-        'valor' => true,
-        'meio_pagamento' => true,
-        'observacao' => true,
-        'cliente_id' => true,
-        'cliente' => true
+        '*' => true
     ];
 }

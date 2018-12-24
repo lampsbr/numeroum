@@ -57,45 +57,34 @@ $this->end();
 <div class="panel panel-default">
     <!-- Panel header -->
     <div class="panel-heading">
-        <h3 class="panel-title"><?= __('Related Pagamentos') ?></h3>
+        <p>
+            <b>Pagamentos</b>
+            <?php echo $this->Html->link(' Adicionar', ['controller' => 'pagamentos', 'action' => 'add', $cliente->id], ['title' => 'Adicionar contato', 'class' => 'btn btn-default btn-sm glyphicon glyphicon-plus pull-right']); ?>
+        </p>
     </div>
     <?php if (!empty($cliente->pagamentos)): ?>
         <table class="table table-striped">
             <thead>
             <tr>
-                <th><?= __('Id') ?></th>
-                <th><?= __('Created') ?></th>
-                <th><?= __('Modified') ?></th>
-                <th><?= __('Deleted') ?></th>
+                <th><?= __('Data') ?></th>
                 <th><?= __('Valor') ?></th>
-                <th><?= __('Meio Pagamento') ?></th>
+                <th><?= __('Meio de Pagamento') ?></th>
                 <th><?= __('Observacao') ?></th>
-                <th><?= __('Cliente Id') ?></th>
-                <th class="actions"><?= __('Actions') ?></th>
             </tr>
             </thead>
             <tbody>
             <?php foreach ($cliente->pagamentos as $pagamentos): ?>
                 <tr>
-                    <td><?= h($pagamentos->id) ?></td>
                     <td><?= h($pagamentos->created) ?></td>
-                    <td><?= h($pagamentos->modified) ?></td>
-                    <td><?= h($pagamentos->deleted) ?></td>
                     <td><?= h($pagamentos->valor) ?></td>
                     <td><?= h($pagamentos->meio_pagamento) ?></td>
                     <td><?= h($pagamentos->observacao) ?></td>
-                    <td><?= h($pagamentos->cliente_id) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link('', ['controller' => 'Pagamentos', 'action' => 'view', $pagamentos->id], ['title' => __('View'), 'class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>
-                        <?= $this->Html->link('', ['controller' => 'Pagamentos', 'action' => 'edit', $pagamentos->id], ['title' => __('Edit'), 'class' => 'btn btn-default glyphicon glyphicon-pencil']) ?>
-                        <?= $this->Form->postLink('', ['controller' => 'Pagamentos', 'action' => 'delete', $pagamentos->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pagamentos->id), 'title' => __('Delete'), 'class' => 'btn btn-default glyphicon glyphicon-trash']) ?>
-                    </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
         </table>
     <?php else: ?>
-        <p class="panel-body">no related Pagamentos</p>
+        <p class="panel-body">Nenhum pagamento cadastrado</p>
     <?php endif; ?>
 </div>
 <div class="panel panel-default">

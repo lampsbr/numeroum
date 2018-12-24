@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use Cake\Log\Log;
 /**
  * Pagamentos Controller
  *
@@ -57,20 +57,30 @@ class PagamentosController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($idCliente)
     {
         $pagamento = $this->Pagamentos->newEntity();
         if ($this->request->is('post')) {
-            $pagamento = $this->Pagamentos->patchEntity($pagamento, $this->request->getData());
+            //buscar cliente no banco
+            $dados = $this->request->getData();
+            Log::write('error', $dados);
+            $cli = $this->Pagamentos->Clientes->get($dados['cliente_id']);
+            Log::write('error', $cli);
+            //subtrair valor pago do saldo devedor
+            //adicionar ao array que será patch
+            $dados['cliente'] = ['id' =>$dados['cliente_id'], 'saldo_devedor' => ($cli->saldo_devedor - $dados['valor'])];
+            Log::write('error', $dados);
+            $pagamento = $this->Pagamentos->patchEntity($pagamento, $dados);
+            Log::write('error', $pagamento);
             if ($this->Pagamentos->save($pagamento)) {
-                $this->Flash->success(__('The pagamento has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                $this->Flash->success('Pagamento cadastrado!');
+            } else{
+                $this->Flash->error('Houve um erro ao cadastrar o pagamento! Tente novamente, ou então anote o horário e avise a Bruno.');
             }
-            $this->Flash->error(__('The pagamento could not be saved. Please, try again.'));
+            return $this->redirect(['controller' => 'clientes', 'action' => 'view', $pagamento->cliente_id]);
         }
-        $clientes = $this->Pagamentos->Clientes->find('list', ['limit' => 200]);
-        $this->set(compact('pagamento', 'clientes'));
+        $pagamento->cliente_id = $idCliente;
+        $this->set(compact('pagamento'));
     }
 
     /**
