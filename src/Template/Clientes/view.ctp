@@ -90,40 +90,31 @@ $this->end();
 <div class="panel panel-default">
     <!-- Panel header -->
     <div class="panel-heading">
-        <h3 class="panel-title"><?= __('Related Vendas') ?></h3>
+        <p>
+            <b>Vendas</b>
+            <?php echo $this->Html->link(' Adicionar', ['controller' => 'vendas', 'action' => 'add', $cliente->id], ['title' => 'Adicionar venda', 'class' => 'btn btn-default btn-sm glyphicon glyphicon-plus pull-right']); ?>
+        </p>
     </div>
     <?php if (!empty($cliente->vendas)): ?>
         <table class="table table-striped">
             <thead>
             <tr>
-                <th><?= __('Id') ?></th>
-                <th><?= __('Created') ?></th>
-                <th><?= __('Modified') ?></th>
-                <th><?= __('Deleted') ?></th>
+                <th><?= __('Data') ?></th>
                 <th><?= __('Observacao') ?></th>
-                <th><?= __('Cliente Id') ?></th>
-                <th class="actions"><?= __('Actions') ?></th>
+                <th><?= __('Valor') ?></th>
             </tr>
             </thead>
             <tbody>
             <?php foreach ($cliente->vendas as $vendas): ?>
                 <tr>
-                    <td><?= h($vendas->id) ?></td>
                     <td><?= h($vendas->created) ?></td>
-                    <td><?= h($vendas->modified) ?></td>
-                    <td><?= h($vendas->deleted) ?></td>
                     <td><?= h($vendas->observacao) ?></td>
-                    <td><?= h($vendas->cliente_id) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link('', ['controller' => 'Vendas', 'action' => 'view', $vendas->id], ['title' => __('View'), 'class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>
-                        <?= $this->Html->link('', ['controller' => 'Vendas', 'action' => 'edit', $vendas->id], ['title' => __('Edit'), 'class' => 'btn btn-default glyphicon glyphicon-pencil']) ?>
-                        <?= $this->Form->postLink('', ['controller' => 'Vendas', 'action' => 'delete', $vendas->id], ['confirm' => __('Are you sure you want to delete # {0}?', $vendas->id), 'title' => __('Delete'), 'class' => 'btn btn-default glyphicon glyphicon-trash']) ?>
-                    </td>
+                    <td><?= h($vendas->valor) ?></td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
         </table>
     <?php else: ?>
-        <p class="panel-body">no related Vendas</p>
+        <p class="panel-body">Nenhuma venda cadastrada</p>
     <?php endif; ?>
 </div>

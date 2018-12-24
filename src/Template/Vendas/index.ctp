@@ -6,8 +6,6 @@ $this->start('tb_actions');
     <li><?= $this->Html->link(__('New Venda'), ['action' => 'add']); ?></li>
     <li><?= $this->Html->link(__('List Clientes'), ['controller' => 'Clientes', 'action' => 'index']); ?></li>
     <li><?= $this->Html->link(__('New Cliente'), ['controller' => 'Clientes', 'action' => 'add']); ?></li>
-    <li><?= $this->Html->link(__('List Items'), ['controller' => 'Items', 'action' => 'index']); ?></li>
-    <li><?= $this->Html->link(__('New Item'), ['controller' => 'Items', 'action' => 'add']); ?></li>
 <?php $this->end(); ?>
 <?php $this->assign('tb_sidebar', '<ul class="nav nav-sidebar">' . $this->fetch('tb_actions') . '</ul>'); ?>
 
@@ -19,6 +17,7 @@ $this->start('tb_actions');
             <th><?= $this->Paginator->sort('modified'); ?></th>
             <th><?= $this->Paginator->sort('deleted'); ?></th>
             <th><?= $this->Paginator->sort('cliente_id'); ?></th>
+            <th><?= $this->Paginator->sort('valor'); ?></th>
             <th class="actions"><?= __('Actions'); ?></th>
         </tr>
     </thead>
@@ -32,6 +31,7 @@ $this->start('tb_actions');
             <td>
                 <?= $venda->has('cliente') ? $this->Html->link($venda->cliente->id, ['controller' => 'Clientes', 'action' => 'view', $venda->cliente->id]) : '' ?>
             </td>
+            <td><?= $this->Number->format($venda->valor) ?></td>
             <td class="actions">
                 <?= $this->Html->link('', ['action' => 'view', $venda->id], ['title' => __('View'), 'class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>
                 <?= $this->Html->link('', ['action' => 'edit', $venda->id], ['title' => __('Edit'), 'class' => 'btn btn-default glyphicon glyphicon-pencil']) ?>

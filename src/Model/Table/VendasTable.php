@@ -10,7 +10,6 @@ use SoftDelete\Model\Table\SoftDeleteTrait;
  * Vendas Model
  *
  * @property \App\Model\Table\ClientesTable|\Cake\ORM\Association\BelongsTo $Clientes
- * @property \App\Model\Table\ItemsTable|\Cake\ORM\Association\HasMany $Items
  *
  * @method \App\Model\Entity\Venda get($primaryKey, $options = [])
  * @method \App\Model\Entity\Venda newEntity($data = null, array $options = [])
@@ -46,9 +45,6 @@ class VendasTable extends Table
             'foreignKey' => 'cliente_id',
             'joinType' => 'INNER'
         ]);
-        $this->hasMany('Items', [
-            'foreignKey' => 'venda_id'
-        ]);
     }
 
     /**
@@ -70,6 +66,11 @@ class VendasTable extends Table
         $validator
             ->scalar('observacao')
             ->allowEmpty('observacao');
+
+        $validator
+            ->decimal('valor')
+            ->requirePresence('valor', 'create')
+            ->notEmpty('valor');
 
         return $validator;
     }

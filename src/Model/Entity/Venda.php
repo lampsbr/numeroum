@@ -12,6 +12,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $deleted
  * @property string|null $observacao
  * @property string $cliente_id
+ * @property float $valor
  *
  * @property \App\Model\Entity\Cliente $cliente
  * @property \App\Model\Entity\Item[] $items
@@ -34,6 +35,7 @@ class Venda extends Entity
         'deleted' => true,
         'observacao' => true,
         'cliente_id' => true,
+        'valor' => true,
         'cliente' => true,
         'items' => true
     ];
