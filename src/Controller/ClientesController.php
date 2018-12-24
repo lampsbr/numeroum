@@ -46,9 +46,13 @@ class ClientesController extends AppController
     public function view($id = null)
     {
         $cliente = $this->Clientes->get($id, [
-            'contain' => ['Users', 'Contatos', 'Pagamentos' => ['sort' => ['Pagamentos.created' => 'DESC']], 'Vendas']
+            'contain' => [
+                'Users', 
+                'Contatos', 
+                'Pagamentos' => ['sort' => ['Pagamentos.created' => 'DESC']], 
+                'Vendas' => ['sort' => ['Vendas.created' => 'DESC']]
+            ]
         ]);
-
         $this->set('cliente', $cliente);
     }
 

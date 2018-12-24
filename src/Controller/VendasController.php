@@ -12,7 +12,7 @@ use App\Controller\AppController;
  */
 class VendasController extends AppController
 {
-    
+
     public function isAuthorized($user){
         $action = $this->request->getParam('action');
         // The add and tags actions are always allowed to logged in users.
@@ -57,20 +57,25 @@ class VendasController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add($idCliente){
         $venda = $this->Vendas->newEntity();
+        if($idCliente){
+            $cliente = $this->Vendas->Clientes->get($idCliente);
+            $venda->cliente_id = $idCliente;
+            $venda->cliente = $cliente;
+        }
         if ($this->request->is('post')) {
             $venda = $this->Vendas->patchEntity($venda, $this->request->getData());
+            $venda->cliente->saldo_devedor += $venda->valor;
             if ($this->Vendas->save($venda)) {
-                $this->Flash->success(__('The venda has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                $this->Flash->success('Venda cadastrada!');
+            } else{
+                $this->Flash->error('Houve um erro ao cadastrar a venda! Tente novamente, ou então anote o horário e avise a Bruno.');
             }
-            $this->Flash->error(__('The venda could not be saved. Please, try again.'));
+            return $this->redirect(['controller' => 'clientes', 'action' => 'view', $venda->cliente_id]);
         }
-        $clientes = $this->Vendas->Clientes->find('list', ['limit' => 200]);
-        $this->set(compact('venda', 'clientes'));
+        //$clientes = $this->Vendas->Clientes->find('list', ['limit' => 200]);
+        $this->set(compact('venda'));
     }
 
     /**
