@@ -22,15 +22,20 @@ $this->start('tb_body_start');
                 <ul class="nav navbar-nav navbar-right visible-xs">
                     <?= $this->fetch('tb_actions') ?>
                 </ul>
-                <!--
+                
                 <ul class="nav navbar-nav navbar-right">
                     <li class="nav-divider"></li>
-                    <li><a href="#">Dashboard</a></li>
-                    <li><a href="#">Settings</a></li>
-                    <li><a href="#">Profile</a></li>
-                    <li><a href="#">Help</a></li>
-                </ul>
-                <form class="navbar-form navbar-right">
+                    <li><?= $this->Html->link('Clientes', ['controller' => 'clientes', 'action' => 'index']) ?> </li>
+		<?php if (isset($_SESSION['Auth']['User']['email'])): ?>
+                        <li>
+                            <div style="line-height: 2.8125rem;padding: 0 0.9375rem; color: #9d9d9d">
+                                <?=$_SESSION['Auth']['User']['email']?>
+                                <?= $this->Html->link(__('(sair)'), ['controller' => 'users', 'action' => 'logout']) ?>
+                            </div>
+                        </li>
+                    <?php endif; ?>                
+		</ul>
+                <!--<form class="navbar-form navbar-right">
                     <input type="text" class="form-control" placeholder="Search...">
                 </form>
                 -->
@@ -40,11 +45,16 @@ $this->start('tb_body_start');
 
     <div class="container-fluid">
         <div class="row">
+        <?php if($this->fetch('tb_sidebar')){ ?>
             <div class="col-sm-3 col-md-2 sidebar">
                 <?= $this->fetch('tb_sidebar') ?>
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <h1 class="page-header"><?= $this->request->getParam('controller'); ?></h1>
+                <h1 class="page-header"><?= $this->request->controller; ?></h1>
+        <?php } else{ ?>
+            <div class="col-sm-12 main">
+                <h1 class="page-header"><?= $this->fetch('titulo') ?></h1>
+        <?php } ?>
 <?php
 /**
  * Default `flash` block.
