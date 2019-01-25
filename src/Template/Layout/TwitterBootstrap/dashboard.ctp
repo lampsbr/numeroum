@@ -16,7 +16,7 @@ $this->start('tb_body_start');
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#"><?= Configure::read('App.title') ?></a>
+                <?= $this->Html->link('Número UM', ['controller' => 'clientes', 'action' => 'index'], ['class' => 'navbar-brand']) ?>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right visible-xs">
@@ -25,7 +25,7 @@ $this->start('tb_body_start');
                 
                 <ul class="nav navbar-nav navbar-right">
                     <li class="nav-divider"></li>
-                    <li><?= $this->Html->link('Clientes', ['controller' => 'clientes', 'action' => 'index']) ?> </li>
+                    
 		<?php if (isset($_SESSION['Auth']['User']['email'])): ?>
                         <li>
                             <div style="line-height: 2.8125rem;padding: 0 0.9375rem; color: #9d9d9d">
