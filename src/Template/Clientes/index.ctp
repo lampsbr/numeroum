@@ -23,7 +23,7 @@ $this->start('titulo');
     </div>
 </div>
 <?php $this->end(); ?>
-<table class="table table-striped" cellpadding="0" cellspacing="0">
+<table class="table table-striped" cellpadding="0" cellspacing="0" style="font-size: large">
     <thead>
         <tr>
             <th><?= $this->Paginator->sort('nome'); ?></th>
