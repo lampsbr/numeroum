@@ -107,7 +107,7 @@ $this->end();
             <tbody>
             <?php foreach ($cliente->vendas as $vendas): ?>
                 <tr>
-                    <td><?= h($vendas->created) ?></td>
+                    <td><?= $vendas->created->i18nFormat('dd-MM-yyyy HH:mm:ss') ?></td>
                     <td><?= h($vendas->observacao) ?></td>
                     <td><?= h($vendas->valor) ?></td>
                 </tr>
